@@ -1,95 +1,116 @@
-// ── Event Showcase ─────────────────────────────────────────
-// Cursor-following PLAY circle · logo hover → expand to centre + show panel
-// Mute toggle · dot indicator · auto-advance
+// ── Event Showcase — auto-cycling info · cursor · mute ──
 (function () {
-  var section = document.querySelector('.event-showcase');
+  var section  = document.querySelector('.event-showcase');
   if (!section) return;
 
-  var video   = document.getElementById('esVideo');
-  var cursor  = document.getElementById('esCursor');
-  var muteBtn = document.getElementById('esMute');
-  var logos   = Array.from(document.querySelectorAll('.es__logo'));
-  var panels  = Array.from(document.querySelectorAll('.es__panel'));
-  var dots    = Array.from(document.querySelectorAll('.es__dot'));
+  var video    = document.getElementById('esVideo');
+  var cursor   = document.getElementById('esCursor');
+  var muteBtn  = document.getElementById('esMute');
+  var nextBtn  = document.getElementById('esNext');
+  var infoWrap = document.querySelector('.es__info-inner');
+  var logoImg  = document.getElementById('esInfoLogo');
+  var tagEl    = document.getElementById('esInfoTag');
+  var titleEl  = document.getElementById('esInfoTitle');
+  var descEl   = document.getElementById('esInfoDesc');
+  var dots     = document.querySelectorAll('.es__dot');
 
-  var current   = 0;
-  var total     = logos.length;
-  var autoTimer = null;
-  var expanded  = false;
+  // ── Event data ──
+  var events = [
+    {
+      video: 'equinox.mp4',
+      logo:  'assets/logo.svg',
+      tag:   'Entrepreneurship Summit \u00b7 2024',
+      title: 'The Equinox<br>E-Summit 2K24',
+      desc:  "MLRIT\u2019s flagship annual summit bringing together entrepreneurs, investors, and innovators to inspire the next generation of leaders."
+    },
+    {
+      video: 'zignasa.mp4',
+      logo:  'assets/main logo.svg',
+      tag:   'Technical & Cultural Fest \u00b7 2025',
+      title: 'Zignasa<br>2025',
+      desc:  "MLRIT\u2019s grand annual extravaganza featuring technical competitions, hackathons, cultural performances, and celebrity nights."
+    }
+  ];
 
-  // ── Helpers ──
-  function clearExpand() {
-    logos.forEach(function (l) {
-      l.classList.remove('is-expanded');
-      l.querySelector('.es__logo-img').style.transform = '';
-    });
-    panels.forEach(function (p) { p.classList.remove('is-visible'); });
-    section.classList.remove('logo-expanded');
-    expanded = false;
-  }
+  var current = 0;
 
-  function activate(idx) {
-    logos.forEach(function (l) { l.classList.remove('is-active'); });
-    dots.forEach(function (d)  { d.classList.remove('is-active'); });
-    logos[idx].classList.add('is-active');
-    dots[idx].classList.add('is-active');
-    current = idx;
-  }
-
+  // ── Switch event with crossfade ──
   function goTo(idx) {
-    idx = ((idx % total) + total) % total;
-    if (idx === current && !expanded) return;
-    clearExpand();
-    activate(idx);
-    resetAuto();
+    if (idx === current) return;
+    idx = (idx + events.length) % events.length;
+
+    // Fade out
+    if (infoWrap) infoWrap.classList.add('es-fading');
+
+    setTimeout(function () {
+      var ev = events[idx];
+
+      // Swap video source
+      if (video) {
+        var src = video.querySelector('source');
+        if (src) src.setAttribute('src', ev.video);
+        video.load();
+        video.play().catch(function () {});
+      }
+
+      if (logoImg)  logoImg.src = ev.logo;
+      if (tagEl)    tagEl.textContent = ev.tag;
+      if (titleEl)  titleEl.innerHTML = ev.title;
+      if (descEl)   descEl.textContent = ev.desc;
+
+      // Update dots
+      dots.forEach(function (d) { d.classList.remove('is-active'); });
+      if (dots[idx]) dots[idx].classList.add('is-active');
+
+      current = idx;
+
+      // Fade in
+      if (infoWrap) infoWrap.classList.remove('es-fading');
+    }, 400);
   }
 
-  // ── Logo hover → expand to viewport centre + show panel ──
-  logos.forEach(function (logo) {
-    logo.addEventListener('mouseenter', function () {
-      var idx = +logo.dataset.index;
-      if (idx !== current) { activate(idx); }
+  // ── Next button ──
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      goTo(current + 1);
+    });
+  }
 
-      // Calculate transform to move logo-img to viewport centre
-      var img  = logo.querySelector('.es__logo-img');
-      var rect = img.getBoundingClientRect();
-      var secRect = section.getBoundingClientRect();
-
-      var cx = secRect.width / 2;
-      var cy = secRect.height * 0.38; // logo sits at ~38% from top
-      var ix = rect.left - secRect.left + rect.width / 2;
-      var iy = rect.top  - secRect.top  + rect.height / 2;
-
-      var scale = Math.min(2.2, secRect.width / rect.width * 0.35);
-      img.style.transform = 'translate(' + (cx - ix) + 'px, ' + (cy - iy) + 'px) scale(' + scale + ')';
-
-      logo.classList.add('is-expanded');
-      section.classList.add('logo-expanded');
-      panels[idx].classList.add('is-visible');
-      expanded = true;
-
-      resetAuto();
+  // ── Dot click navigation ──
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      var idx = parseInt(dot.dataset.index, 10);
+      goTo(idx);
     });
   });
 
-  // Collapse when mouse leaves logo area
-  var logosWrap = document.getElementById('esLogos');
-  logosWrap.addEventListener('mouseleave', function () {
-    clearExpand();
+  // ── 2. Custom cursor — only show after first mouse move ──
+  var cursorX = 0, cursorY = 0, hasMoved = false, raf;
+
+  function moveCursor() {
+    if (cursor) {
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top  = cursorY + 'px';
+    }
+    raf = requestAnimationFrame(moveCursor);
+  }
+
+  section.addEventListener('mousemove', function (e) {
+    var rect = section.getBoundingClientRect();
+    cursorX = e.clientX - rect.left;
+    cursorY = e.clientY - rect.top;
+
+    if (!hasMoved) {
+      hasMoved = true;
+      section.classList.add('cursor-visible');
+      raf = requestAnimationFrame(moveCursor);
+    }
   });
 
-  // ── Custom cursor ──
-  section.addEventListener('mouseenter', function () {
-    section.classList.add('cursor-visible');
-  });
   section.addEventListener('mouseleave', function () {
-    section.classList.remove('cursor-visible');
-    section.classList.remove('cursor-shrink');
-  });
-  section.addEventListener('mousemove', function (e) {
-    var r = section.getBoundingClientRect();
-    cursor.style.left = (e.clientX - r.left) + 'px';
-    cursor.style.top  = (e.clientY - r.top)  + 'px';
+    hasMoved = false;
+    section.classList.remove('cursor-visible', 'cursor-shrink');
+    cancelAnimationFrame(raf);
   });
 
   // Shrink cursor over interactive elements
@@ -98,31 +119,25 @@
     el.addEventListener('mouseleave', function () { section.classList.remove('cursor-shrink'); });
   });
 
-  // ── Mute toggle ──
-  muteBtn.addEventListener('click', function () {
-    video.muted = !video.muted;
-    section.classList.toggle('is-muted', video.muted);
-  });
-
-  // Start muted
+  // ── 3. Mute / unmute toggle ──
   section.classList.add('is-muted');
 
-  // ── Auto-advance dots every 5s ──
-  function resetAuto() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(function () {
-      goTo(current + 1);
-    }, 5000);
+  if (muteBtn && video) {
+    muteBtn.addEventListener('click', function () {
+      video.muted = !video.muted;
+      section.classList.toggle('is-muted', video.muted);
+    });
   }
-  resetAuto();
 
-  // ── Play / pause video on visibility ──
-  var io = new IntersectionObserver(function (entries) {
+  // ── 4. Pause / resume video on visibility ──
+  var ioVideo = new IntersectionObserver(function (entries) {
+    if (!video) return;
     if (entries[0].isIntersecting) {
       video.play().catch(function () {});
     } else {
       video.pause();
     }
   }, { threshold: 0 });
-  io.observe(section);
+  ioVideo.observe(section);
+
 })();

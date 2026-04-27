@@ -34,7 +34,7 @@
 
 /* Section heading */
 .photo-section__heading {
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--ps-orange);

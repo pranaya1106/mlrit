@@ -64,7 +64,7 @@
 }
 
 .why-section__heading {
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: var(--fs-h2);
   font-weight: 700;
   color: #fff;
@@ -91,7 +91,7 @@
 }
 
 .why-section__body {
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: var(--fs-body);
   font-weight: 400;
   color: rgba(255,255,255,0.58);

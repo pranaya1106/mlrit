@@ -125,7 +125,7 @@
 }
 
 .rank-row__num {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: 1.9rem;
   font-weight: 900;
   color: #2e7d32;

@@ -33,7 +33,7 @@
 }
 
 .ss-heading {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: clamp(2rem, 3.5vw, 3rem);
   font-weight: 700;
   color: #0B0F1A;
@@ -165,7 +165,7 @@
 }
 
 .ss-card__name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: #F8F6F1;
@@ -222,7 +222,7 @@
 }
 
 .ss-card__name-badge .ss-card__name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
   color: #1A0F00;

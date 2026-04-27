@@ -6,7 +6,7 @@
   <title>MLRIT — Marri Laxman Reddy Institute of Technology</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/navbar.css" />
   <link rel="stylesheet" href="css/hero.css" />
   <link rel="stylesheet" href="css/main.css" />
@@ -357,33 +357,33 @@
 
             <div class="ss-card is-active" role="group" aria-label="Slide 1 of 6">
               <div class="ss-card__img-wrap">
-                <img src="success stories/8.jpeg" alt="Dr. Ajmeera Kiran — Best Mentor Award" loading="eager" />
+                <img src="success stories/8.jpeg" alt="Microsoft Internship — 51 LPA" loading="eager" />
                 <div class="ss-card__info">
-                  <span class="ss-card__tag">Faculty · Achievement</span>
-                  <h3 class="ss-card__name">Dr. Ajmeera Kiran</h3>
-                  <p class="ss-card__role">Associate Professor &amp; HOD, Dept. of CSE</p>
-                  <p class="ss-card__company">Best Mentor Award · IGNITE 2K26</p>
+                  <span class="ss-card__tag">Placement · Batch 2026</span>
+                  <h3 class="ss-card__name">Microsoft Internship</h3>
+                  <p class="ss-card__role">Sai Loukhya Chundi &amp; Kakumanu Sailatha</p>
+                  <p class="ss-card__company">Microsoft · 51 LPA · ₹1.25 Lakh/month Stipend</p>
                 </div>
               </div>
               <div class="ss-card__name-badge">
-                <span class="ss-card__tag">Faculty · Achievement</span>
-                <h3 class="ss-card__name">Dr. Ajmeera Kiran</h3>
+                <span class="ss-card__tag">Placement · Batch 2026</span>
+                <h3 class="ss-card__name">Microsoft Internship</h3>
               </div>
             </div>
 
             <div class="ss-card" role="group" aria-label="Slide 2 of 6">
               <div class="ss-card__img-wrap">
-                <img src="success stories/6.png" alt="Cyient Foundation Innovation — 1st Prize" loading="lazy" />
+                <img src="success stories/6.png" alt="Mrs. Vijay Keerthika — Wipro Certified Faculty" loading="lazy" />
                 <div class="ss-card__info">
-                  <span class="ss-card__tag">Innovation · 1st Prize</span>
-                  <h3 class="ss-card__name">Cyient Innovation Award</h3>
-                  <p class="ss-card__role">CSE Students · Jan 29–30, 2026</p>
-                  <p class="ss-card__company">Cyient Foundation · Best Innovation Idea</p>
+                  <span class="ss-card__tag">Faculty · Certification</span>
+                  <h3 class="ss-card__name">Mrs. Vijay Keerthika</h3>
+                  <p class="ss-card__role">MLRIT CSE-AIML Faculty</p>
+                  <p class="ss-card__company">Wipro TalentNext · Java Full Stack · 87%</p>
                 </div>
               </div>
               <div class="ss-card__name-badge">
-                <span class="ss-card__tag">Innovation · 1st Prize</span>
-                <h3 class="ss-card__name">Cyient Innovation Award</h3>
+                <span class="ss-card__tag">Faculty · Certification</span>
+                <h3 class="ss-card__name">Mrs. Vijay Keerthika</h3>
               </div>
             </div>
 
@@ -910,172 +910,209 @@
     </section>
 
     <!-- =====================
-         8. EVENT SHOWCASE
+         7. EVENT SHOWCASE
          ===================== -->
     <section class="event-showcase" id="events">
 
       <!-- Video background -->
       <video class="es__video" id="esVideo" autoplay muted loop playsinline>
-        <source src="assets/DJI_0770.MP4" type="video/mp4" />
+        <source src="equinox.mp4" type="video/mp4" />
       </video>
 
       <!-- Dark overlay -->
       <div class="es__overlay"></div>
 
-      <!-- Cursor-following PLAY circle -->
+      <!-- Cursor-following PLAY circle (only visible on mouse move) -->
       <div class="es__cursor" id="esCursor" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         <span>PLAY</span>
       </div>
 
-      <!-- Mute toggle — bottom left -->
-      <button class="es__mute" id="esMute" aria-label="Toggle mute">
-        <!-- Sound icon (shown when muted = false) -->
-        <svg class="es__mute-icon es__mute-icon--on" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      <!-- Event info — always visible at bottom left -->
+      <div class="es__info" id="esInfo">
+        <div class="es__info-inner">
+          <!-- Event logo thumbnail -->
+          <img class="es__info-logo" id="esInfoLogo" src="assets/logo.svg" alt="Event logo" />
+          <!-- Event details -->
+          <p class="es__info-tag" id="esInfoTag">Entrepreneurship Summit · 2024</p>
+          <h2 class="es__info-title" id="esInfoTitle">The Equinox<br>E-Summit 2K24</h2>
+          <p class="es__info-desc" id="esInfoDesc">MLRIT's flagship annual summit bringing together entrepreneurs, investors, and innovators to inspire the next generation of leaders.</p>
+          <a href="#" class="btn btn--white es__info-cta">
+            <span class="btn__chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+            <span class="btn__label">Explore Event</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Next event button — right side -->
+      <button class="es__next" id="esNext" aria-label="Next event">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <!-- Muted icon -->
-        <svg class="es__mute-icon es__mute-icon--off" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-          <line x1="23" y1="9" x2="17" y2="15"/>
-          <line x1="17" y1="9" x2="23" y2="15"/>
-        </svg>
-        <span class="es__mute-label">Sound</span>
       </button>
 
-      <!-- Event info panels — centred, shown on logo hover -->
-      <div class="es__panels" id="esPanels">
-        <div class="es__panel" data-panel="0">
-          <p class="es__panel-tag">Entrepreneurship Summit · 2024</p>
-          <h2 class="es__panel-title">The Equinox<br>E-Summit 2K24</h2>
-          <p class="es__panel-desc">MLRIT's flagship annual summit bringing together entrepreneurs,
-            investors, and innovators to inspire the next generation of leaders.</p>
-          <a href="#" class="btn btn--white es__panel-cta">
-            <span class="btn__chevron"><svg viewBox="0 0 24 24">
-              <polyline points="9 18 15 12 9 6"/></svg></span>
-            <span class="btn__label">Explore Event</span>
-          </a>
+      <!-- Bottom bar: dots (left) · mute (right) -->
+      <div class="es__bottom-bar">
+        <!-- Dot navigation -->
+        <div class="es__dots" id="esDots">
+          <button class="es__dot is-active" data-index="0" aria-label="Event 1"></button>
+          <button class="es__dot" data-index="1" aria-label="Event 2"></button>
         </div>
-        <div class="es__panel" data-panel="1">
-          <p class="es__panel-tag">Technical &amp; Cultural Fest · 2025</p>
-          <h2 class="es__panel-title">Zignasa<br>2025</h2>
-          <p class="es__panel-desc">MLRIT's grand annual extravaganza featuring technical competitions,
-            hackathons, cultural performances, and celebrity nights.</p>
-          <a href="#" class="btn btn--white es__panel-cta">
-            <span class="btn__chevron"><svg viewBox="0 0 24 24">
-              <polyline points="9 18 15 12 9 6"/></svg></span>
-            <span class="btn__label">Explore Event</span>
-          </a>
-        </div>
-      </div>
 
-      <!-- Event logos — bottom left -->
-      <div class="es__logos" id="esLogos">
-        <div class="es__logo is-active" data-index="0" tabindex="0"
-             role="button" aria-label="The Equinox E-Summit 2K24">
-          <img src="assets/logo.svg" alt="The Equinox E-Summit 2K24" class="es__logo-img" />
-        </div>
-        <div class="es__logo" data-index="1" tabindex="0" role="button" aria-label="Zignasa 2025">
-          <img src="assets/main logo.svg" alt="Zignasa 2025" class="es__logo-img" />
-        </div>
-      </div>
-
-      <!-- Dots indicator — bottom centre -->
-      <div class="es__dots">
-        <span class="es__dot is-active" data-index="0"></span>
-        <span class="es__dot" data-index="1"></span>
+        <!-- Mute toggle -->
+        <button class="es__mute" id="esMute" aria-label="Toggle mute">
+          <svg class="es__mute-icon es__mute-icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+          <svg class="es__mute-icon es__mute-icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+          <span class="es__mute-label">Sound</span>
+        </button>
       </div>
 
     </section>
 
     <!-- =====================
-         9. ADMISSIONS CTA
+         10. STICKY FOOTER
          ===================== -->
-    <section class="admissions-cta" id="admissions">
-      <div class="section-wrap">
-        <div class="admissions-cta__inner">
-          <div>
-            <p class="admissions-cta__label reveal">Admissions 2025–26</p>
-            <h2 class="admissions-cta__heading reveal" data-delay="1">Your Engineering Journey Starts Here.</h2>
-            <p class="admissions-cta__sub reveal" data-delay="2">Applications are open for B.Tech, M.Tech, and MBA programmes. Seats are limited — secure yours before the deadline.</p>
-          </div>
-          <div class="admissions-cta__actions">
-            <a href="#" class="btn btn-gold">Apply Now</a>
-            <a href="#" class="btn btn-ghost" style="color:#fff; border-color:rgba(255,255,255,0.3);">Download Brochure</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <footer class="sticky-footer">
+      <div class="sticky-footer__inner">
+        <div class="sticky-footer__content">
 
-    <!-- =====================
-         10. FOOTER
-         ===================== -->
-    <footer class="site-footer">
-      <div class="section-wrap">
-        <div class="footer__grid">
+          <!-- Decorative radial gradients -->
+          <div class="sticky-footer__bg" aria-hidden="true">
+            <div class="sfbg sfbg--1"></div>
+            <div class="sfbg sfbg--2"></div>
+            <div class="sfbg sfbg--3"></div>
+          </div>
 
-          <div class="footer__brand">
-            <img src="mlrit-logo.png" alt="MLRIT" />
-            <p>MLR Institute of Technology, Dundigal, Hyderabad — shaping engineers and leaders since 2005.</p>
-            <div class="footer__socials">
-              <a href="https://www.facebook.com/Mlrit/" aria-label="Facebook">f</a>
-              <a href="https://x.com/mlritin" aria-label="X">x</a>
-              <a href="https://www.instagram.com/mlritofficial/" aria-label="Instagram">in</a>
-              <a href="https://www.linkedin.com/school/mlr-institute-of-technology/" aria-label="LinkedIn">li</a>
-              <a href="https://www.youtube.com/channel/UCAfZfemyTCM-965RZy6QiGA" aria-label="YouTube">yt</a>
+          <!-- Top CTA bar -->
+          <div class="sf-cta">
+            <div class="sf-cta__text">
+              <h3>Start Your Journey at MLRIT</h3>
+              <p>Applications open for B.Tech, M.Tech &amp; MBA — limited seats.</p>
+            </div>
+            <div class="sf-cta__right">
+              <div class="sf-cta__actions">
+                <a href="#" class="btn btn--primary">Apply Now</a>
+                <a href="#" class="btn btn--white">Download Brochure</a>
+              </div>
+              <form class="sf-newsletter sf-newsletter--cta" onsubmit="return false;">
+                <input type="email" placeholder="Your email address" />
+                <button type="submit">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </form>
             </div>
           </div>
 
-          <div class="footer__col">
-            <h5>Quick Links</h5>
-            <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Admissions</a></li>
-              <li><a href="#">Campus Life</a></li>
-              <li><a href="#">Examinations</a></li>
-              <li><a href="#">Training &amp; Placements</a></li>
-              <li><a href="#">Scholarships</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul>
+          <!-- Main grid -->
+          <div class="sf-grid">
+
+            <!-- Brand column -->
+            <div class="sf-brand sf-col-reveal">
+              <img src="mlrit-logo.png" alt="MLRIT" class="sf-brand__logo" />
+              <p class="sf-brand__desc">MLR Institute of Technology, Dundigal, Hyderabad — shaping engineers and leaders since 2005.</p>
+              <div class="sf-brand__contact">
+                <a href="tel:+919652226061">+91 96522 26061</a>
+                <a href="mailto:info@mlrinstitutions.ac.in">info@mlrinstitutions.ac.in</a>
+              </div>
+              <div class="sf-brand__socials">
+                <a href="https://www.facebook.com/Mlrit/" aria-label="Facebook" class="sf-social-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/mlritofficial/" aria-label="Instagram" class="sf-social-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="https://www.youtube.com/channel/UCAfZfemyTCM-965RZy6QiGA" aria-label="YouTube" class="sf-social-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0a0a0a"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/school/mlr-institute-of-technology/" aria-label="LinkedIn" class="sf-social-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://x.com/mlritin" aria-label="X / Twitter" class="sf-social-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Academics -->
+            <div class="sf-col sf-col-reveal" style="--delay: 0.1s">
+              <h5>Academics</h5>
+              <ul>
+                <li><a href="#">B.Tech Programs</a></li>
+                <li><a href="#">M.Tech Programs</a></li>
+                <li><a href="#">MBA</a></li>
+                <li><a href="#">Ph.D</a></li>
+                <li><a href="#">Academic Calendar</a></li>
+                <li><a href="#">Syllabus &amp; Curriculum</a></li>
+                <li><a href="#">Library</a></li>
+                <li><a href="#">Examinations</a></li>
+              </ul>
+            </div>
+
+            <!-- Admissions -->
+            <div class="sf-col sf-col-reveal" style="--delay: 0.2s">
+              <h5>Admissions</h5>
+              <ul>
+                <li><a href="#">How to Apply</a></li>
+                <li><a href="#">Eligibility Criteria</a></li>
+                <li><a href="#">Fee Structure</a></li>
+                <li><a href="#">Scholarships</a></li>
+                <li><a href="#">EAMCET Counselling</a></li>
+                <li><a href="#">International Students</a></li>
+                <li><a href="#">Lateral Entry</a></li>
+              </ul>
+            </div>
+
+            <!-- Campus -->
+            <div class="sf-col sf-col-reveal" style="--delay: 0.3s">
+              <h5>Campus Life</h5>
+              <ul>
+                <li><a href="#">Clubs &amp; Societies</a></li>
+                <li><a href="#">Sports &amp; Fitness</a></li>
+                <li><a href="#">Cultural Events</a></li>
+                <li><a href="#">Hostel</a></li>
+                <li><a href="#">Cafeteria</a></li>
+                <li><a href="#">Transport</a></li>
+                <li><a href="#">Health Centre</a></li>
+              </ul>
+            </div>
+
+            <!-- Connect -->
+            <div class="sf-col sf-col-reveal" style="--delay: 0.4s">
+              <h5>Connect</h5>
+              <ul>
+                <li><a href="#">About MLRIT</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Placements</a></li>
+                <li><a href="#">Research</a></li>
+                <li><a href="#">NIRF Rankings</a></li>
+                <li><a href="#">Press &amp; Media</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+
+          </div><!-- /sf-grid -->
+
+          <!-- Bottom bar -->
+          <div class="sf-bottom">
+            <span>&copy; 2025 KMR Educational Society. All rights reserved.</span>
+            <span class="sf-legal">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Use</a>
+              <a href="#">Sitemap</a>
+            </span>
           </div>
 
-          <div class="footer__col">
-            <h5>Useful Links</h5>
-            <ul>
-              <li><a href="#">AICTE Approvals</a></li>
-              <li><a href="#">Mandatory Disclosures</a></li>
-              <li><a href="#">UGC Undertaking</a></li>
-              <li><a href="#">Academic Calendars</a></li>
-              <li><a href="#">Annual Reports</a></li>
-              <li><a href="#">Audited Statements</a></li>
-            </ul>
-          </div>
+          <!-- Big MLRIT watermark -->
+          <div class="sf-watermark" aria-hidden="true">MLRIT</div>
 
-          <div class="footer__col">
-            <h5>Departments</h5>
-            <ul>
-              <li><a href="#">Aeronautical Engineering</a></li>
-              <li><a href="#">AI &amp; Machine Learning</a></li>
-              <li><a href="#">Computer Science &amp; Engineering</a></li>
-              <li><a href="#">Electronics &amp; Communication</a></li>
-              <li><a href="#">Electrical &amp; Electronics</a></li>
-              <li><a href="#">Mechanical Engineering</a></li>
-            </ul>
-          </div>
-
-        </div>
-
-        <div class="footer__bottom">
-          <span>© 2025 KMR Educational Society. All rights reserved.</span>
-          <span>
-            Survey No. 444, Dundigal, Medchal Malkajgiri, Telangana – 500 043 &nbsp;·&nbsp;
-            <a href="tel:+919652226061">+91 96522 26061</a> &nbsp;·&nbsp;
-            <a href="mailto:info@mlrinstitutions.ac.in">info@mlrinstitutions.ac.in</a>
-          </span>
         </div>
       </div>
     </footer>
@@ -1340,81 +1377,20 @@
         stackWrapper.appendChild(card);
       });
 
-      // ── Dots ──
+      // ── Show cards in a static row immediately ──
+      if (deckHint) deckHint.classList.add('hidden');
+      stackWrapper.style.display = 'none';
+      scatterRow.style.display   = 'flex';
+      scatterRow.innerHTML       = '';
+
       stories.forEach((story, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'deck-dot';
-        dot.setAttribute('aria-label', `Story ${i + 1}`);
-        dot.dataset.idx = i;
-        deckDots.appendChild(dot);
+        const card   = buildCard(story);
+        const n      = stories.length > 1 ? (i / (stories.length - 1)) * 2 - 1 : 0;
+        const rotate = n * 5;
+        card.style.transform = `rotate(${rotate}deg) scale(1)`;
+        card.style.opacity   = '1';
+        scatterRow.appendChild(card);
       });
-
-      // ── Scatter / unscatter ──
-      let scattered = false;
-
-      function scatter() {
-        if (scattered) return;
-        scattered = true;
-        deckHint.classList.add('hidden');
-        stackWrapper.style.display = 'none';
-        scatterRow.style.display   = 'flex';
-        scatterRow.innerHTML       = '';
-
-        stories.forEach((story, i) => {
-          const card   = buildCard(story);
-          const n      = stories.length > 1 ? (i / (stories.length - 1)) * 2 - 1 : 0;
-          const rotate = n * 5;
-
-          card.style.transform  = 'rotate(0deg) scale(0.72)';
-          card.style.opacity    = '0';
-          card.style.transition = 'none';
-          scatterRow.appendChild(card);
-
-          const vid = card.querySelector('video');
-
-          setTimeout(() => {
-            card.style.transition = 'transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.45s ease, box-shadow 0.3s ease, filter 0.28s ease';
-            card.style.transform  = `rotate(${rotate}deg) scale(1)`;
-            card.style.opacity    = '1';
-            // do NOT autoplay — wait for hover
-          }, i * 65);
-
-          // dot sync + play/pause on hover
-          const dot = deckDots.children[i];
-          card.addEventListener('mouseenter', () => {
-            if (dot) { dot.style.width = '22px'; dot.style.background = story.accent; }
-            card.style.boxShadow = `0 28px 56px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1), 0 0 28px ${story.accent}55`;
-            if (vid) { vid.currentTime = 0; vid.play().catch(() => {}); }
-          });
-          card.addEventListener('mouseleave', () => {
-            if (dot) { dot.style.width = '6px'; dot.style.background = ''; }
-            card.style.boxShadow = '';
-            if (vid) { vid.pause(); vid.currentTime = 0; }
-          });
-        });
-
-        deckDots.classList.add('visible');
-      }
-
-      function unscatter() {
-        if (!scattered) return;
-        scattered = false;
-        deckDots.classList.remove('visible');
-        Array.from(deckDots.children).forEach(d => { d.style.width = ''; d.style.background = ''; });
-        scatterRow.querySelectorAll('video').forEach(v => v.pause());
-        scatterRow.style.display   = 'none';
-        stackWrapper.style.display = 'block';
-        // restore fanned positions
-        Array.from(stackWrapper.children).forEach((card, i) => {
-          const cfg = fanConfig[i] || fanConfig[fanConfig.length - 1];
-          card.style.transform = `rotate(${cfg.rotate}deg) translate(${cfg.tx}px, ${cfg.ty}px) scale(${cfg.scale})`;
-          card.style.opacity   = String(cfg.opacity);
-        });
-        deckHint.classList.remove('hidden');
-      }
-
-      deckZone.addEventListener('mouseenter', scatter);
-      deckZone.addEventListener('mouseleave', unscatter);
 
       // ── Mobile ──
       stories.forEach(story => {
@@ -1498,6 +1474,21 @@
           card.classList.add('testi-card--active');
         });
       });
+    })();
+  </script>
+
+  <!-- Footer column reveal -->
+  <script>
+    (function () {
+      const cols = document.querySelectorAll('.sf-col-reveal');
+      if (!cols.length) return;
+      const io = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          cols.forEach(c => c.classList.add('is-visible'));
+          io.disconnect();
+        }
+      }, { threshold: 0.1 });
+      io.observe(document.querySelector('.sticky-footer'));
     })();
   </script>
 

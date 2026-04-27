@@ -1,7 +1,7 @@
 /* ===== Reset & Base ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; }
+body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
@@ -152,7 +152,7 @@ ul { list-style: none; }
   padding: 0 1.1rem;
   height: 48px;
   color: rgba(255,255,255,0.85);
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -231,7 +231,7 @@ ul { list-style: none; }
   align-items: center;
   gap: 8px;
   padding: 0.38rem 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.875rem;
   color: #333;
   position: relative;
@@ -317,7 +317,7 @@ ul { list-style: none; }
 }
 
 .support-panel__heading {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -346,7 +346,7 @@ ul { list-style: none; }
 .support-panel__call-btn:hover { transform: scale(1.08); }
 
 .support-panel__call-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   color: #111;
@@ -522,7 +522,7 @@ ul { list-style: none; }
 }
 
 .hero__headline h1 {
-  font-family: 'Inter', 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: var(--fs-h1);
   font-weight: 900;
   color: #fff;
@@ -566,7 +566,7 @@ ul { list-style: none; }
 }
 
 .hero__sub {
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
   font-style: normal;
@@ -643,9 +643,8 @@ ul { list-style: none; }
   --text-muted:  #888;
   --border:      #e8e8e8;
   --radius:      14px;
-  --serif:       'Poppins', sans-serif;
-  --sans:        'Inter', 'Segoe UI', Arial, sans-serif;
-  --display:     'Poppins', 'Segoe UI', Arial, sans-serif;
+  --heading:     'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sans:        'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* ── Side padding — matches utexas.edu feel ── */
   --page-pad: clamp(1.5rem, 5vw, 5rem);
@@ -691,7 +690,7 @@ body {
 
 .section-label {
   display: inline-block;
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: var(--ls-label);
@@ -701,7 +700,7 @@ body {
 }
 
 .section-heading {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--text-dark);
@@ -834,7 +833,7 @@ body {
 
 /* Number */
 .stat-item__number {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: clamp(2.2rem, 4vw, 3rem);
   font-weight: 900;
   color: #fff;
@@ -954,7 +953,7 @@ body {
 }
 
 .rank-row__num {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: 1.9rem;
   font-weight: 900;
   color: #2e7d32;
@@ -1671,7 +1670,7 @@ body {
 }
 
 .event-featured__title {
-  font-family: var(--serif);
+  font-family: var(--heading);
   font-size: var(--fs-h3);
   font-weight: 700;
   color: var(--text-dark);
@@ -1709,7 +1708,7 @@ body {
 }
 
 .event-item__date .day {
-  font-family: var(--serif);
+  font-family: var(--heading);
   font-size: var(--fs-h3);
   font-weight: 700;
   color: var(--green);
@@ -1776,7 +1775,7 @@ body {
 }
 
 .admissions-cta__heading {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: var(--fs-h1);
   font-weight: 800;
   color: #fff;
@@ -2047,7 +2046,7 @@ body {
 }
 
 .rank-card__body span {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: var(--fs-meta);
   color: var(--text-muted);
   line-height: 1.5;
@@ -2223,7 +2222,7 @@ body {
 }
 
 .rank-row__num {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: 1.9rem;
   font-weight: 900;
   color: #2e7d32;
@@ -3320,7 +3319,7 @@ body {
 }
 
 .why-section__body {
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: var(--fs-body);
   font-weight: 400;
   color: rgba(255,255,255,0.58);
@@ -3395,7 +3394,7 @@ body {
 
 .ev-header__label {
   display: block;
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -3405,7 +3404,7 @@ body {
 }
 
 .ev-header__title {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 800;
   color: #fff;
@@ -3512,7 +3511,7 @@ body {
 }
 
 .ev-card__title {
-  font-family: var(--display);
+  font-family: var(--heading);
   font-size: clamp(1.8rem, 3.5vw, 3rem);
   font-weight: 800;
   color: #fff;
