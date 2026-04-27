@@ -1,0 +1,9 @@
+node_modules/
+*.mp4
+*.zip
+*.rar
+*.png
+*.jpg
+build/
+dist/
+.env
