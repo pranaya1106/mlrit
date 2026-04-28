@@ -23,6 +23,17 @@
   z-index: 0;
 }
 
+/* ── Instagram embed ── */
+.es__embed {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+  z-index: 0;
+  display: none;
+  background: #000;
+}
+
 /* ── Overlay ── */
 .es__overlay {
   position: absolute;

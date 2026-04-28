@@ -24,7 +24,8 @@
       desc:  "MLRIT\u2019s flagship annual summit bringing together entrepreneurs, investors, and innovators to inspire the next generation of leaders."
     },
     {
-      video: '/zignasa.mp4',
+      type:  'embed',
+      embed: 'https://www.instagram.com/reel/DRrMiTKjP8w/embed/',
       logo:  '/assets/main-logo.svg',
       tag:   'Technical & Cultural Fest \u00b7 2025',
       title: 'Zignasa<br>2025',
@@ -33,6 +34,7 @@
   ];
 
   var current = 0;
+  var embed = document.getElementById('esEmbed');
 
   // ── Switch event with crossfade ──
   function goTo(idx) {
@@ -45,12 +47,19 @@
     setTimeout(function () {
       var ev = events[idx];
 
-      // Swap video source
-      if (video) {
-        var src = video.querySelector('source');
-        if (src) src.setAttribute('src', ev.video);
-        video.load();
-        video.play().catch(function () {});
+      // Swap media — video or Instagram embed
+      if (ev.type === 'embed') {
+        if (video) { video.pause(); video.style.display = 'none'; }
+        if (embed) { embed.src = ev.embed; embed.style.display = 'block'; }
+      } else {
+        if (embed) { embed.src = ''; embed.style.display = 'none'; }
+        if (video) {
+          video.style.display = 'block';
+          var src = video.querySelector('source');
+          if (src) src.setAttribute('src', ev.video);
+          video.load();
+          video.play().catch(function () {});
+        }
       }
 
       if (logoImg)  logoImg.src = ev.logo;
