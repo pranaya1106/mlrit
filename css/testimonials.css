@@ -243,6 +243,58 @@
   }
 }
 
+/* ── Sound toggle ── */
+.testi-sound-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.testi-mute {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+  color: #555;
+}
+
+.testi-mute:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #2E7D32;
+  color: #2E7D32;
+  transform: scale(1.05);
+}
+
+.testi-mute.is-unmuted {
+  background: #2E7D32;
+  border-color: #2E7D32;
+  color: #fff;
+}
+
+.testi-mute-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Show/hide icons based on state */
+.testi-mute .testi-mute-icon--on { display: none; }
+.testi-mute .testi-mute-icon--off { display: block; }
+.testi-mute.is-unmuted .testi-mute-icon--on { display: block; }
+.testi-mute.is-unmuted .testi-mute-icon--off { display: none; }
+
+.testi-mute-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .testi-card {

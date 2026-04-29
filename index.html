@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="/css/testimonials.css" />
   <link rel="stylesheet" href="/css/why-mlrit.css" />
   <link rel="stylesheet" href="/css/events-disc.css" />
-  <link rel="stylesheet" href="/css/departments.css" />
 </head>
 <body>
 
@@ -32,16 +31,39 @@
         <div class="masthead__tagline">
           <span>MLR Institute of Technology</span>
         </div>
-        <a href="#" class="eapcet-badge" aria-label="EAPCET Code MLID">
-          EAPCET CODE&nbsp;:&nbsp;MLID
-        </a>
+        <div class="masthead__right">
+          <a href="#" class="eapcet-badge" aria-label="EAPCET Code MLID">
+            EAPCET CODE&nbsp;:&nbsp;MLID
+          </a>
+          <button class="masthead__search-btn" id="searchToggle" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Search overlay -->
+        <div class="masthead__search-overlay" id="searchOverlay">
+          <div class="masthead__search-box">
+            <svg class="masthead__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" class="masthead__search-input" id="searchInput" placeholder="Search MLRIT..." autocomplete="off" />
+            <button class="masthead__search-close" id="searchClose" aria-label="Close search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <nav class="main-nav" aria-label="Main navigation">
       <div class="container main-nav__inner">
         <ul class="main-nav__list" id="mainNavList">
-          <div class="nav-indicator" id="navIndicator"></div>
 
           <!-- About -->
           <li class="main-nav__item">
@@ -294,9 +316,6 @@
             <span class="hero__line hero__line--3">Meets <em class="hero__gold">Excellence.</em></span>
           </h1>
           <p class="hero__sub">MLRIT shapes engineers, thinkers, and leaders ready to solve tomorrow's challenges — right here in Hyderabad.</p>
-          <div class="hero__ctas">
-            <a href="#" class="btn-primary">Explore Programs</a>
-          </div>
         </div>
       </div>
 
@@ -596,140 +615,6 @@
     </section>
 
     <!-- =====================
-         5. PROGRAMS
-         ===================== -->
-    <section class="programs-section" id="programs">
-
-      <!-- Sticky top bar: eyebrow + title + tabs + counter -->
-      <div class="programs-topbar">
-        <div class="programs-container">
-          <div class="programs-topbar__inner">
-            <div>
-              <span class="programs-eyebrow">Academics</span>
-              <h2 class="programs-heading">Programs Designed<br>for the Real World</h2>
-            </div>
-            <div class="programs-topbar__right">
-              <div class="programs-tabs">
-                <button class="tab-btn tab-btn--active" data-tab="ug">Undergraduate</button>
-                <button class="tab-btn" data-tab="pg">Postgraduate</button>
-              </div>
-              <span class="programs-counter" id="deptCounter">01 / 08</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- UG — two columns side by side -->
-      <div class="dept-columns" id="ugStack">
-
-        <!-- LEFT: Computer Science -->
-        <div class="dept-col">
-          <h3 class="dept-col__title">Computer Science</h3>
-          <div class="dept-stack">
-            <div class="dept-card" style="--accent:#008F31; --i:0">
-              <span class="dept-card__badge">CSE</span>
-              <h3 class="dept-card__name">Computer Science &amp; Engineering</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/computer-science-engineering/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#0068B4; --i:1">
-              <span class="dept-card__badge">AI / ML</span>
-              <h3 class="dept-card__name">Artificial Intelligence &amp; Machine Learning</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/cse-aiml/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#7C3AED; --i:2">
-              <span class="dept-card__badge">Data Science</span>
-              <h3 class="dept-card__name">Computer Science with Data Science</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/cse-ds/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#DC2626; --i:3">
-              <span class="dept-card__badge">Cyber Security</span>
-              <h3 class="dept-card__name">CSE — Cyber Security</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/cse-cs/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: Core Engineering -->
-        <div class="dept-col">
-          <h3 class="dept-col__title">Core Engineering</h3>
-          <div class="dept-stack">
-            <div class="dept-card" style="--accent:#D97706; --i:0">
-              <span class="dept-card__badge">ECE</span>
-              <h3 class="dept-card__name">Electronics &amp; Communication Engineering</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/ece/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#059669; --i:1">
-              <span class="dept-card__badge">EEE</span>
-              <h3 class="dept-card__name">Electrical &amp; Electronics Engineering</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/eee/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#EA580C; --i:2">
-              <span class="dept-card__badge">Mechanical</span>
-              <h3 class="dept-card__name">Mechanical Engineering</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/mechanical-engineering/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#0891B2; --i:3">
-              <span class="dept-card__badge">Aeronautical</span>
-              <h3 class="dept-card__name">Aeronautical Engineering</h3>
-              <p class="dept-card__meta">B.Tech · 4 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/aeronautical-engineering/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- PG — two columns (hidden by default) -->
-      <div class="dept-columns" id="pgStack" style="display:none">
-
-        <div class="dept-col">
-          <h3 class="dept-col__title">Postgraduate Programs</h3>
-          <div class="dept-stack">
-            <div class="dept-card" style="--accent:#008F31; --i:0">
-              <span class="dept-card__badge">M.Tech — CSE</span>
-              <h3 class="dept-card__name">Computer Science &amp; Engineering</h3>
-              <p class="dept-card__meta">M.Tech · 2 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/admissions/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#7C3AED; --i:1">
-              <span class="dept-card__badge">M.Tech — VLSI</span>
-              <h3 class="dept-card__name">VLSI &amp; Embedded Systems</h3>
-              <p class="dept-card__meta">M.Tech · 2 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/admissions/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="dept-col">
-          <h3 class="dept-col__title">&nbsp;</h3>
-          <div class="dept-stack">
-            <div class="dept-card" style="--accent:#0068B4; --i:0">
-              <span class="dept-card__badge">M.Tech — ML</span>
-              <h3 class="dept-card__name">Machine Learning &amp; AI</h3>
-              <p class="dept-card__meta">M.Tech · 2 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/admissions/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-            <div class="dept-card" style="--accent:#C8960C; --i:1">
-              <span class="dept-card__badge">MBA</span>
-              <h3 class="dept-card__name">Master of Business Administration</h3>
-              <p class="dept-card__meta">MBA · 2 Years · JNTUH</p>
-              <a href="https://mlrit.ac.in/mba/" class="dept-card__link">Explore &rarr;</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- =====================
          7. PLACEMENTS
          ===================== -->
     <section class="placements" id="placements">
@@ -862,20 +747,20 @@
         <div class="testi-fan">
           <!-- Card 1 -->
           <div class="testi-card" style="--rotate: -18deg; --ty: 40px;">
-            <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777366665/av1.mp4" muted loop playsinline preload="metadata"></video>
+            <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777495632/alumni_card1.mp4" muted loop playsinline preload="metadata"></video>
             <div class="testi-card__overlay"></div>
             <div class="testi-card-label">
-              <span class="testi-card-name">Arjun Reddy</span>
+              <span class="testi-card-name">Ishant</span>
               <span class="testi-card-role">SDE @ Amazon</span>
             </div>
           </div>
           <!-- Card 2 -->
           <div class="testi-card" style="--rotate: -9deg; --ty: 15px;">
-            <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777366673/av2.mp4" muted loop playsinline preload="metadata"></video>
+            <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777495647/alumni_card2.mp4" muted loop playsinline preload="metadata"></video>
             <div class="testi-card__overlay"></div>
             <div class="testi-card-label">
-              <span class="testi-card-name">Priya Sharma</span>
-              <span class="testi-card-role">Data Scientist @ Microsoft</span>
+              <span class="testi-card-name">Snigdha Reddy</span>
+              <span class="testi-card-role">DBS</span>
             </div>
           </div>
           <!-- Card 3 — center (plays by default) -->
@@ -883,8 +768,8 @@
             <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777366676/av3.mp4" autoplay muted loop playsinline preload="auto"></video>
             <div class="testi-card__overlay"></div>
             <div class="testi-card-label">
-              <span class="testi-card-name">Kiran Kumar</span>
-              <span class="testi-card-role">DevOps @ Google</span>
+              <span class="testi-card-name">Gopi Pavani</span>
+              <span class="testi-card-role">Safran</span>
             </div>
           </div>
           <!-- Card 4 -->
@@ -892,20 +777,38 @@
             <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777371368/sneha_patel.mp4" muted loop playsinline preload="metadata"></video>
             <div class="testi-card__overlay"></div>
             <div class="testi-card-label">
-              <span class="testi-card-name">Sneha Patel</span>
-              <span class="testi-card-role">Product Manager @ Flipkart</span>
+              <span class="testi-card-name">Sravya Lingisetty</span>
+              <span class="testi-card-role">Infosys</span>
             </div>
           </div>
           <!-- Card 5 -->
           <div class="testi-card" style="--rotate: 18deg; --ty: 40px;">
-            <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777366673/av2.mp4" muted loop playsinline preload="metadata"></video>
+            <video class="testi-card__video" src="https://res.cloudinary.com/dhqhhtvym/video/upload/v1777495652/alumni_card5.mp4" muted loop playsinline preload="metadata"></video>
             <div class="testi-card__overlay"></div>
             <div class="testi-card-label">
-              <span class="testi-card-name">Rohit Verma</span>
-              <span class="testi-card-role">ML Engineer @ Meta</span>
+              <span class="testi-card-name">Aishwarya</span>
+              <span class="testi-card-role">Cognizant</span>
             </div>
           </div>
         </div>
+
+        <!-- Sound toggle -->
+        <div class="testi-sound-bar">
+          <button class="testi-mute" id="testiMute" aria-label="Toggle testimonial sound">
+            <svg class="testi-mute-icon testi-mute-icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <svg class="testi-mute-icon testi-mute-icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <span class="testi-mute-label">Sound</span>
+          </button>
+        </div>
+
       </div>
     </section>
 
@@ -1132,6 +1035,34 @@
 
   <script src="/js/navbar.js"></script>
   <script src="/js/hero-scroll.js"></script>
+
+  <!-- Search toggle -->
+  <script>
+    (function () {
+      var btn     = document.getElementById('searchToggle');
+      var overlay = document.getElementById('searchOverlay');
+      var input   = document.getElementById('searchInput');
+      var close   = document.getElementById('searchClose');
+      if (!btn || !overlay) return;
+
+      btn.addEventListener('click', function () {
+        overlay.classList.add('is-open');
+        setTimeout(function () { input.focus(); }, 300);
+      });
+
+      close.addEventListener('click', function () {
+        overlay.classList.remove('is-open');
+      });
+
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) overlay.classList.remove('is-open');
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') overlay.classList.remove('is-open');
+      });
+    })();
+  </script>
   <script>
     // ── Stats Counter Animation ──────────────────────────────────────────
     (function () {
@@ -1218,15 +1149,6 @@
     // Why MLRIT video — autoplay on scroll into view
       io.observe(section);
     })();
-
-    // Programs tab toggle
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
 
     // (Events section JS moved to js/events.js)
 
@@ -1464,10 +1386,26 @@
   </script>
 
   <script>
-    // ── Testimonial fan: play video on hover ─────────────────────────────
+    // ── Testimonial fan: play video on hover + sound toggle ─────────────
     (function () {
       const cards = document.querySelectorAll('.testi-card');
+      const muteBtn = document.getElementById('testiMute');
       if (!cards.length) return;
+
+      var soundEnabled = false;
+
+      // Sound toggle
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          soundEnabled = !soundEnabled;
+          muteBtn.classList.toggle('is-unmuted', soundEnabled);
+          // Apply to all videos
+          cards.forEach(function (c) {
+            var v = c.querySelector('.testi-card__video');
+            if (v) v.muted = !soundEnabled;
+          });
+        });
+      }
 
       cards.forEach(function (card) {
         var video = card.querySelector('.testi-card__video');
@@ -1481,6 +1419,7 @@
             c.classList.remove('testi-card--active');
           });
           // Play this one
+          video.muted = !soundEnabled;
           video.play();
           card.classList.add('testi-card--active');
         });
@@ -1505,7 +1444,6 @@
 
   <script src="/js/events.js" defer></script>
   <script src="/js/success-stories-scroll.js" defer></script>
-  <script src="/js/departments-scroll.js" defer></script>
   <script src="/js/why-mlrit.js" defer></script>
 </body>
 </html>

@@ -17,7 +17,6 @@ ul { list-style: none; }
   right: 0;
   z-index: 1000;
   width: 100%;
-  overflow: clip;
 }
 
 /* =====================
@@ -39,9 +38,16 @@ ul { list-style: none; }
 
 .masthead__tagline { flex: 1; }
 
-.eapcet-badge {
+/* Masthead right group */
+.masthead__right {
   margin-left: auto;
-  margin-right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.eapcet-badge {
   display: inline-flex;
   align-items: center;
   padding: 0.45rem 1.1rem;
@@ -57,6 +63,102 @@ ul { list-style: none; }
   text-decoration: none;
   transition: background 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
+}
+
+/* Search button */
+.masthead__search-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: #555;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.masthead__search-btn:hover {
+  border-color: #2E7D32;
+  color: #2E7D32;
+  background: #f0f8f0;
+}
+
+/* Search overlay */
+.masthead__search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 120px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.masthead__search-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.masthead__search-box {
+  width: min(600px, 90vw);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.masthead__search-overlay.is-open .masthead__search-box {
+  transform: translateY(0);
+}
+
+.masthead__search-icon {
+  color: #999;
+  flex-shrink: 0;
+}
+
+.masthead__search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: #111;
+  background: transparent;
+}
+
+.masthead__search-input::placeholder {
+  color: #aaa;
+}
+
+.masthead__search-close {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 4px;
+  display: grid;
+  place-items: center;
+  transition: color 0.2s;
+}
+
+.masthead__search-close:hover {
+  color: #E8500A;
 }
 
 .eapcet-badge:hover {
@@ -86,13 +188,8 @@ ul { list-style: none; }
   position: relative;
   top: 0;
   z-index: 500;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   width: 100%;
-}
-
-/* is-fixed no longer needed — header is always fixed */
-.main-nav.is-fixed {
-  position: relative;
 }
 
 .main-nav .container { padding-left: var(--page-pad); padding-right: var(--page-pad); }
@@ -100,7 +197,6 @@ ul { list-style: none; }
 .main-nav__inner {
   display: flex;
   align-items: stretch;
-  position: relative;          /* anchor for the glide indicator */
 }
 
 /* ── Nav list ── */
@@ -108,39 +204,11 @@ ul { list-style: none; }
   display: flex;
   align-items: stretch;
   width: 100%;
-  position: relative;
 }
 
-/* ── Glide indicator — the sliding green bar ── */
-.nav-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  background: #E8500A;
-  border-radius: 2px 2px 0 0;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.2s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ── Pipe separators between items ── */
+/* ── Nav items ── */
 .main-nav__item {
-  position: static;           /* mega-panel is relative to .main-nav */
-  display: flex;
-  align-items: stretch;
-}
-
-.main-nav__item + .main-nav__item::before {
-  content: '';
-  display: block;
-  width: 1px;
-  background: rgba(255,255,255,0.2);
-  align-self: center;
-  height: 18px;
-  flex-shrink: 0;
+  position: relative;
 }
 
 .main-nav__item--right { margin-left: auto; }
@@ -149,66 +217,112 @@ ul { list-style: none; }
 .main-nav__link {
   display: flex;
   align-items: center;
+  gap: 0.35rem;
   padding: 0 1.1rem;
   height: 48px;
-  color: rgba(255,255,255,0.85);
+  color: #fff;
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0.01em;
   white-space: nowrap;
   cursor: pointer;
-  transition: color 0.2s ease;
-  /* hide old chevron */
+  position: relative;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
-.main-nav__link .chevron { display: none; }
+/* ── Animated orange underline on hover ── */
+.main-nav__link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #E8500A, transparent);
+  border-radius: 2px 2px 0 0;
+  transition: transform 0.25s ease;
+}
+
+.main-nav__item:hover > .main-nav__link::before,
+.main-nav__item:focus-within > .main-nav__link::before,
+.main-nav__item.is-open > .main-nav__link::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ── Chevron icon ── */
+.main-nav__link .chevron {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255,255,255,0.65);
+  border-bottom: 2px solid rgba(255,255,255,0.65);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.main-nav__item:hover > .main-nav__link .chevron,
+.main-nav__item:focus-within > .main-nav__link .chevron,
+.main-nav__item.is-open > .main-nav__link .chevron {
+  transform: rotate(-135deg) translateY(-2px);
+  border-color: #fff;
+}
 
 .main-nav__item:hover > .main-nav__link,
 .main-nav__item:focus-within > .main-nav__link,
 .main-nav__item.is-open > .main-nav__link {
+  background: rgba(232,80,10,0.08);
   color: #fff;
 }
 
+.main-nav__link:active {
+  background: rgba(232,80,10,0.15);
+}
+
+.main-nav__link:active::before {
+  transform: translateX(-50%) scaleX(1);
+  background: #E8500A;
+  height: 3px;
+}
+
 /* =====================
-   MEGA DROPDOWN PANEL
-   Full-width, slides down from nav bar
+   DROPDOWN — smooth fade + slide
    ===================== */
 .dropdown {
-  /* full-width panel anchored to .main-nav */
-  position: fixed;
-  top: 0;           /* set by JS */
+  position: absolute;
+  top: calc(100% + 2px);
   left: 0;
-  right: 0;
-  width: 100%;
   background: #fff;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.14);
-  border-top: 3px solid #2E7D32;
-  padding: 2rem var(--page-pad);
-  display: flex;
+  min-width: 560px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #2E7D32, #E8500A, #2E7D32) 1;
+  padding: 1.75rem;
+  gap: 2rem;
   flex-direction: row;
-  gap: 2.5rem;
-  z-index: 490;
+  z-index: 200;
 
   /* hidden state */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
-  transition: opacity 0.28s ease,
-              transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-              visibility 0.28s;
-  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+
+  /* always flex but visually hidden */
+  display: flex;
 }
 
 .main-nav__item:hover > .dropdown,
-.main-nav__item:focus-within > .dropdown {
+.main-nav__item:focus-within > .dropdown,
+.main-nav__item.is-open > .dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  pointer-events: auto;
 }
 
-/* ── Columns inside mega panel ── */
+/* ── Columns inside dropdown ── */
 .dropdown__col {
   flex: 1;
   min-width: 140px;
@@ -216,21 +330,19 @@ ul { list-style: none; }
 
 .dropdown__col h4 {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.09em;
   color: #2E7D32;
   border-bottom: 2px solid #2E7D32;
-  padding-bottom: 0.45rem;
-  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.7rem;
 }
 
 .dropdown__col a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0.38rem 0;
+  display: block;
+  padding: 0.32rem 0;
   font-family: 'Poppins', sans-serif;
   font-size: 0.875rem;
   color: #333;
@@ -252,13 +364,25 @@ ul { list-style: none; }
 
 .dropdown__col a:hover {
   color: #2E7D32;
-  padding-left: 0.65rem;
+  padding-left: 0.6rem;
 }
 
 .dropdown__col a:hover::before { transform: translateY(-50%) scaleY(1); }
 
-/* right-aligned panel (Chronicles) */
-.dropdown--right { justify-content: flex-end; }
+.dropdown__col a:active {
+  color: #E8500A;
+}
+
+.dropdown__col a:active::before {
+  transform: translateY(-50%) scaleY(1);
+  background: #E8500A;
+}
+
+/* right-aligned dropdown (Chronicles) */
+.dropdown--right {
+  left: auto;
+  right: 0;
+}
 
 /* =====================
    SUPPORT TAB & PANEL
@@ -280,8 +404,8 @@ ul { list-style: none; }
 }
 
 .support-panel {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: calc(100% + 2px);
   right: 0;
   width: 300px;
   background: #fff;
@@ -292,13 +416,13 @@ ul { list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 12px;
-  z-index: 490;
+  z-index: 200;
   overflow: hidden;
 
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
-  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.4,0,0.2,1), visibility 0.28s;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
   pointer-events: none;
 }
 
@@ -310,12 +434,6 @@ ul { list-style: none; }
   pointer-events: auto;
 }
 
-.support-panel__divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(0,0,0,0.08);
-}
-
 .support-panel__heading {
   font-family: 'Poppins', sans-serif;
   font-size: 0.65rem;
@@ -324,6 +442,12 @@ ul { list-style: none; }
   text-transform: uppercase;
   color: #aaa;
   margin: 0;
+}
+
+.support-panel__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(0,0,0,0.08);
 }
 
 .support-panel__call-row {
@@ -393,9 +517,9 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   .masthead__tagline { display: none; }
   .main-nav__list { flex-wrap: wrap; }
-  .main-nav__link { padding: 0 0.65rem; font-size: 0.8rem; }
-  .dropdown { padding: 1.25rem; flex-wrap: wrap; }
+  .main-nav__link { padding: 0 0.7rem; font-size: 0.82rem; }
+  .dropdown { min-width: 90vw; flex-wrap: wrap; }
   .support-panel { width: 95vw; right: 0; border-radius: 0 0 20px 20px; }
-  .support-panel__socials { gap: 14px; }
+  .support-panel__socials { gap: 16px; }
   .support-panel__social svg { width: 44px; height: 44px; }
 }
