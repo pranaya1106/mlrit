@@ -46,7 +46,7 @@
   /* Tighten side padding on mobile */
   :root {
     --page-pad: 1rem;
-    --header-h: 108px;
+    --header-h: 72px;  /* masthead only — green nav bar hidden on mobile */
   }
 
   /* Fluid images everywhere */
@@ -103,7 +103,7 @@
     letter-spacing: 0.04em;
   }
 
-  /* ── Hamburger button — injected by JS ── */
+  /* ── Hamburger button — injected into masthead__right by JS ── */
   .nav-hamburger {
     display: flex;
     flex-direction: column;
@@ -113,25 +113,24 @@
     width: 40px;
     height: 40px;
     background: transparent;
-    border: 1.5px solid rgba(255,255,255,0.3);
+    border: 1.5px solid #ccc;
     border-radius: 8px;
     cursor: pointer;
     padding: 0;
     flex-shrink: 0;
     transition: background 0.2s ease, border-color 0.2s ease;
-    order: 99; /* always last in flex row */
   }
 
   .nav-hamburger:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.6);
+    background: #f0f0f0;
+    border-color: #2E7D32;
   }
 
   .nav-hamburger__bar {
     display: block;
     width: 20px;
     height: 2px;
-    background: #fff;
+    background: #2E7D32;
     border-radius: 2px;
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
@@ -148,23 +147,19 @@
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* ── Main nav bar ── */
+  /* ── Main nav — hidden by JS, shown as dropdown drawer ── */
   .main-nav {
-    position: relative;
+    display: none;  /* hidden on mobile — JS-built drawer replaces it */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
 
-  .main-nav .container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .main-nav__inner {
-    position: relative;
-  }
-
-  /* Nav list: hidden drawer, slides down when open */
+  /* Nav list: vertical drawer — JS controls display via inline style */
   .main-nav__list {
-    display: none;
     flex-direction: column;
     width: 100%;
     background: #1b5e20;
@@ -172,10 +167,6 @@
     max-height: 80vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-  }
-
-  .main-nav__list.is-open {
-    display: flex;
   }
 
   /* Nav items — full width rows */
@@ -344,47 +335,39 @@
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {
 
+  /* 2×2 grid — all 4 stats visible at once */
   .stats-strip__inner {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .stat-item {
-    padding: 28px 16px;
+    padding: 24px 12px;
   }
 
   .stat-item__number {
-    font-size: clamp(1.8rem, 7vw, 2.4rem);
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    margin-bottom: 8px;
   }
 
   .stat-item__label {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
   }
 
-  /* Restore right border on item 1 (was removed at 768px in main.css) */
-  .stat-item:nth-child(2)::before {
+  /* Hide all pseudo-element vertical dividers — grid handles spacing */
+  .stat-item::before {
     display: none;
   }
 
-  /* Bottom border between rows */
-  .stat-item:nth-child(1),
-  .stat-item:nth-child(2) {
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-}
-
-@media (max-width: 400px) {
-  .stats-strip__inner {
-    grid-template-columns: 1fr;
-  }
-
+  /* Divider between the two rows */
   .stat-item:nth-child(1),
   .stat-item:nth-child(2) {
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  .stat-item:not(:last-child)::before {
-    display: none;
+  /* Divider between left and right columns */
+  .stat-item:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.06);
   }
 }
 
@@ -416,17 +399,10 @@
     font-size: 1.5rem;
   }
 
-  /* Logo constellation — center and scale down */
+  /* Hide logo constellation on mobile — too cluttered at small sizes */
   .logo-cluster-wrap {
-    width: 280px;
-    height: 280px;
-    margin: 0 auto;
+    display: none;
   }
-
-  .lc-bubble--center { width: 90px;  height: 90px; }
-  .lc-bubble--md     { width: 72px;  height: 72px; }
-  .lc-bubble--sm     { width: 58px;  height: 58px; }
-  .lc-bubble--xs     { width: 46px;  height: 46px; }
 
   /* Rank cards row */
   .rank-cards {
@@ -578,7 +554,7 @@
 
 
 /* ─────────────────────────────────────────────
-   8. TESTIMONIALS
+   8. TESTIMONIALS — Simple horizontal scroll on mobile
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {
 
@@ -587,28 +563,109 @@
   }
 
   .testi-header {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     padding: 0 1rem;
+    text-align: left;
   }
 
   .testi-header .section-heading {
-    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-size: clamp(1.4rem, 6vw, 1.9rem);
   }
 
-  /* Fan layout → horizontal scroll (already handled in testimonials.css,
-     but ensure padding is touch-friendly) */
+  /* Hide the "hover over the deck" hint — irrelevant on touch */
+  .testi-header .section-sub {
+    display: none;
+  }
+
+  /* Allow horizontal scroll — parent overflow:hidden blocks it */
+  .testimonials {
+    overflow: visible !important;
+  }
+
+  /* Contain the fan scroll within its own box */
   .testi-fan {
-    padding: 16px 1rem 24px;
-    gap: 14px;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    gap: 12px !important;
+    /* Left padding shows first card flush; right padding hints at next card */
+    padding: 8px 1rem 20px !important;
   }
 
+  .testi-fan::-webkit-scrollbar { display: none; }
+
+  /* ── Each card — upright, no rotation, no overlap ── */
   .testi-card {
-    width: 180px;
-    height: 270px;
+    transform: none !important;
+    margin: 0 !important;
+
+    /* ~2.5 cards visible: viewport minus padding divided by 2.5 */
+    width: calc((100vw - 2rem - 24px) / 2.3) !important;
+    min-width: 130px !important;
+    max-width: 175px !important;
+    height: 220px !important;
+
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
   }
 
+  .testi-card--center {
+    transform: none !important;
+  }
+
+  /* Lift on hover/tap */
+  .testi-fan .testi-card:hover,
+  .testi-fan .testi-card:focus-within {
+    transform: translateY(-5px) scale(1.03) !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.4) !important;
+    z-index: 10;
+  }
+
+  /* Video — dimmed by default so name is readable, brightens when active */
+  .testi-card .testi-card__video {
+    filter: brightness(0.7) !important;
+    opacity: 1 !important;
+  }
+
+  .testi-card.testi-card--active .testi-card__video,
+  .testi-card:hover .testi-card__video {
+    filter: brightness(1) !important;
+  }
+
+  /* Name label sizing */
+  .testi-card-label {
+    padding: 12px 10px;
+  }
+
+  .testi-card-name {
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  .testi-card-role {
+    font-size: 0.62rem;
+  }
+
+  /* Sound bar */
   .testi-sound-bar {
-    margin-top: 16px;
+    margin-top: 12px;
+    padding: 0 1rem;
   }
 
   .testi-mute {
@@ -660,47 +717,77 @@
 
 
 /* ─────────────────────────────────────────────
-   10. EVENTS
+   10. EVENTS — keep horizontal layout on mobile
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {
 
   .events {
-    padding: 52px 0;
+    padding: 44px 0;
   }
 
+  /* Restore side-by-side: featured left, list right */
   .events__grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 28px;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .event-featured__img {
+    aspect-ratio: 4/3;
   }
 
   .event-featured__body {
-    padding: 18px;
+    padding: 14px;
+  }
+
+  .event-featured__tag {
+    font-size: 0.6rem;
+    margin-bottom: 5px;
   }
 
   .event-featured__title {
-    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    margin-bottom: 6px;
   }
 
   .event-featured__desc {
-    font-size: 0.82rem;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    /* Limit to 3 lines so it doesn't overflow */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
+  .event-featured__body .btn {
+    font-size: 0.72rem;
+    padding: 0.5rem 1rem;
+    min-height: 36px;
+  }
+
+  /* Event list — compact */
   .event-item {
-    padding: 14px 0;
-    gap: 12px;
+    padding: 10px 0;
+    gap: 8px;
   }
 
   .event-item__date .day {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+  }
+
+  .event-item__date .month {
+    font-size: 0.6rem;
   }
 
   .event-item__info strong {
-    font-size: 0.82rem;
+    font-size: 0.72rem;
+    line-height: 1.3;
   }
 
   .event-item__info span {
-    font-size: 0.7rem;
+    font-size: 0.62rem;
   }
 }
 
@@ -799,14 +886,33 @@
     width: 100%;
   }
 
-  /* Main grid — 2 columns */
+  /* Main grid — brand full width, then link cols in 2 columns */
   .sf-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 1.2rem 1rem;
+    gap: 1.2rem 1.5rem;
   }
 
+  /* Brand column spans both columns */
   .sf-brand {
     grid-column: 1 / -1;
+  }
+
+  /* Each link column takes one cell — 2 per row */
+  .sf-col {
+    min-width: 0;
+  }
+
+  .sf-col h5 {
+    font-size: 0.72rem;
+    margin-bottom: 10px;
+  }
+
+  .sf-col ul li {
+    margin-bottom: 7px;
+  }
+
+  .sf-col ul li a {
+    font-size: 0.82rem;
   }
 
   .sf-brand__desc {
@@ -836,13 +942,14 @@
 
 @media (max-width: 480px) {
 
+  /* Keep 2-column link grid even on small phones */
   .sf-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.2rem;
   }
 
   .sf-brand {
-    grid-column: auto;
+    grid-column: 1 / -1;
   }
 
   .sticky-footer__content {
@@ -935,64 +1042,90 @@
 
 
 /* ─────────────────────────────────────────────
-   15. EVENT SHOWCASE
+   15. EVENT SHOWCASE — desktop-like horizontal on mobile
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {
 
   .event-showcase {
-    height: 80vh;
-    min-height: 480px;
+    height: 56vw;
+    min-height: 300px;
+    max-height: 420px;
     cursor: auto;
   }
 
-  /* Hide custom cursor on touch */
   .es__cursor {
     display: none !important;
   }
 
+  /* Info panel — compact, bottom-left */
   .es__info {
-    bottom: 4.5rem;
+    bottom: 2.8rem;
     left: 1rem;
-    right: 1rem;
+    right: 3.5rem;
     max-width: none;
   }
 
-  .es__info-title {
-    font-size: clamp(1.3rem, 6vw, 2rem);
-  }
-
-  .es__info-desc {
-    font-size: 0.8rem;
-    max-width: 100%;
-  }
-
+  /* Hide logo on mobile — saves space */
   .es__info-logo {
-    width: clamp(56px, 18vw, 90px);
-    margin-bottom: 0.8rem;
+    display: none;
+  }
+
+  .es__info-tag {
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .es__info-title {
+    font-size: clamp(0.95rem, 4vw, 1.25rem);
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+
+  /* Hide description — too cluttered on small screen */
+  .es__info-desc {
+    display: none;
   }
 
   .es__info-cta {
-    min-height: 44px;
+    height: 34px;
+    font-size: 0.7rem;
+    min-width: 110px;
   }
 
-  /* Next button — move to bottom right */
+  /* Next button */
   .es__next {
-    right: 1rem;
-    width: 44px;
-    height: 44px;
+    right: 0.6rem;
+    width: 36px;
+    height: 36px;
   }
 
+  /* Bottom bar */
   .es__bottom-bar {
-    padding: 1rem 1rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .es__dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .es__dot.is-active {
+    width: 18px;
   }
 
   .es__mute {
-    padding: 0.4rem 0.7rem 0.4rem 0.55rem;
-    min-height: 36px;
+    padding: 0.28rem 0.55rem 0.28rem 0.4rem;
+    gap: 4px;
   }
 
   .es__mute-label {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
+  }
+
+  .es__mute-icon {
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -1076,26 +1209,3 @@
 }
 
 
-/* ─────────────────────────────────────────────
-   HAMBURGER JS HELPER — show button in nav bar
-───────────────────────────────────────────── */
-@media (max-width: 768px) {
-
-  /* The hamburger is injected into .main-nav__inner by JS.
-     On desktop it must be invisible. */
-  .nav-hamburger {
-    display: none; /* hidden by default; JS shows it on mobile */
-  }
-}
-
-/* Force show on mobile (overrides the rule above for small screens) */
-@media (max-width: 768px) {
-  .main-nav .nav-hamburger {
-    display: flex;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-  }
-}

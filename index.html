@@ -1388,7 +1388,335 @@
   </script>
 
   <script>
-    // ── Testimonial fan: play video on hover + sound toggle ─────────────
+    // ── Testimonial fan: play on hover (desktop) + tap (mobile) + sound toggle ──
+    (function () {
+      const cards   = document.querySelectorAll('.testi-card');
+      const muteBtn = document.getElementById('testiMute');
+      if (!cards.length) return;
+
+      var soundEnabled = false;
+
+      // ── Sound toggle ──
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          soundEnabled = !soundEnabled;
+          muteBtn.classList.toggle('is-unmuted', soundEnabled);
+          cards.forEach(function (c) {
+            var v = c.querySelector('.testi-card__video');
+            if (v) v.muted = !soundEnabled;
+          });
+        });
+      }
+
+      // ── Seek to first frame so thumbnail shows (not black) ──
+      cards.forEach(function (card) {
+        var video = card.querySelector('.testi-card__video');
+        if (!video || video.autoplay) return;
+        video.addEventListener('loadeddata', function () {
+          if (video.currentTime === 0) video.currentTime = 0.1;
+        }, { once: true });
+      });
+
+      // ── Helper: play one card, pause all others ──
+      function playCard(card) {
+        cards.forEach(function (c) {
+          var v = c.querySelector('.testi-card__video');
+          if (v && c !== card) { v.pause(); }
+          c.classList.remove('testi-card--active');
+        });
+        var video = card.querySelector('.testi-card__video');
+        if (!video) return;
+        video.muted = !soundEnabled;
+        // Use play() directly — must be called synchronously in gesture handler
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
+        card.classList.add('testi-card--active');
+      }
+
+      function pauseCard(card) {
+        var video = card.querySelector('.testi-card__video');
+        if (video) video.pause();
+        card.classList.remove('testi-card--active');
+      }
+
+      var isMobile = window.matchMedia('(max-width: 768px)');
+
+      cards.forEach(function (card) {
+        // ── Desktop: hover to play ──
+        card.addEventListener('mouseenter', function () {
+          playCard(card);
+        });
+
+        card.addEventListener('mouseleave', function () {
+          if (!card.classList.contains('testi-card--center') || isMobile.matches) {
+            pauseCard(card);
+          }
+        });
+
+        // ── Mobile: tap to toggle (click + touchend for reliability) ──
+        var tapped = false;
+
+        card.addEventListener('touchend', function (e) {
+          if (!isMobile.matches) return;
+          tapped = true;
+          e.preventDefault(); // prevent ghost click
+          if (card.classList.contains('testi-card--active')) {
+            pauseCard(card);
+          } else {
+            playCard(card);
+          }
+        }, { passive: false });
+
+        card.addEventListener('click', function (e) {
+          if (!isMobile.matches) return;
+          if (tapped) { tapped = false; return; } // already handled by touchend
+          if (card.classList.contains('testi-card--active')) {
+            pauseCard(card);
+          } else {
+            playCard(card);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Footer column reveal -->
+  <script>
+    (function () {
+      const cols = document.querySelectorAll('.sf-col-reveal');
+      if (!cols.length) return;
+      const io = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          cols.forEach(c => c.classList.add('is-visible'));
+          io.disconnect();
+        }
+      }, { threshold: 0.1 });
+      io.observe(document.querySelector('.sticky-footer'));
+    })();
+  </script>
+
+  <script src="/js/events.js" defer></script>
+  <script src="/js/success-stories-scroll.js" defer></script>
+  <script src="/js/why-mlrit.js" defer></script>
+
+  <!-- ── Mobile hamburger menu ── -->
+  <script>
+  (function () {
+    'use strict';
+
+    var MQ = window.matchMedia('(max-width: 768px)');
+    if (!MQ.matches) return;
+
+    var siteHeader = document.querySelector('.site-header');
+    var navList    = document.getElementById('mainNavList');
+    var mastRight  = document.querySelector('.masthead__right');
+
+    /* ── Hamburger button ── */
+    var hamburger = document.createElement('button');
+    hamburger.className = 'nav-hamburger';
+    hamburger.setAttribute('aria-label', 'Toggle navigation');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.innerHTML =
+      '<span class="nav-hamburger__bar"></span>' +
+      '<span class="nav-hamburger__bar"></span>' +
+      '<span class="nav-hamburger__bar"></span>';
+    mastRight.appendChild(hamburger);
+
+    /* ── Drawer overlay — starts BELOW the fixed header ── */
+    var drawer = document.createElement('div');
+    drawer.id = 'mobileNavDrawer';
+    Object.assign(drawer.style, {
+      position: 'fixed', top: '0', left: '0', right: '0', bottom: '0',
+      zIndex: '998',   /* below site-header (z-index:1000) so header stays tappable */
+      display: 'none', flexDirection: 'column',
+      background: '#1a5c1e', overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch'
+    });
+    document.body.appendChild(drawer);
+
+    /* ── Build menu from original nav items ── */
+    function buildDrawer() {
+      drawer.innerHTML = '';
+      var allPanels = []; /* track all accordion entries for mutual close */
+
+      /* Get all top-level nav items from the original nav */
+      var originalItems = Array.from(navList.querySelectorAll(':scope > .main-nav__item'));
+
+      originalItems.forEach(function (origItem) {
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'border-bottom:1px solid rgba(255,255,255,0.1);';
+
+        /* ── Top-level row ── */
+        var row = document.createElement('div');
+        row.style.cssText = [
+          'display:flex', 'align-items:center', 'justify-content:space-between',
+          'padding:0.9rem 1.25rem', 'cursor:pointer', 'user-select:none'
+        ].join(';');
+
+        /* Label — strip the chevron span, keep only text */
+        var origLink = origItem.querySelector(':scope > .main-nav__link');
+        var labelText = origLink ? origLink.childNodes[0].textContent.trim() : '';
+
+        var label = document.createElement('span');
+        label.textContent = labelText;
+        label.style.cssText = 'color:#fff;font-size:1rem;font-weight:600;font-family:Poppins,sans-serif;';
+
+        /* Dropdown columns from original */
+        var origDrop = origItem.querySelector(':scope > .dropdown, :scope > .support-panel');
+
+        if (origDrop) {
+          /* Arrow indicator */
+          var arrow = document.createElement('span');
+          arrow.textContent = '›';
+          arrow.style.cssText = 'color:rgba(255,255,255,0.6);font-size:1.4rem;line-height:1;transition:transform 0.25s;display:inline-block;';
+
+          row.appendChild(label);
+          row.appendChild(arrow);
+          wrapper.appendChild(row);
+
+          /* ── Sub-links panel ── */
+          var panel = document.createElement('div');
+          panel.style.cssText = [
+            'display:flex', 'flex-direction:column',
+            'background:rgba(255,255,255,0.12)',
+            'padding:0 1.25rem',
+            'max-height:0',
+            'overflow:hidden',
+            'opacity:0',
+            'transition:max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease'
+          ].join(';');
+
+          /* Build sub-links from dropdown columns */
+          var cols = Array.from(origDrop.querySelectorAll('.dropdown__col'));
+          cols.forEach(function (col) {
+            var heading = col.querySelector('h4');
+            if (heading) {
+              var h = document.createElement('div');
+              h.textContent = heading.textContent.trim();
+              h.style.cssText = [
+                'font-size:0.62rem', 'font-weight:700',
+                'letter-spacing:0.12em', 'text-transform:uppercase',
+                'color:rgba(255,255,255,0.5)',
+                'margin:0.75rem 0 0.4rem',
+                'padding-bottom:0.3rem',
+                'border-bottom:1px solid rgba(255,255,255,0.12)'
+              ].join(';');
+              panel.appendChild(h);
+            }
+            var links = Array.from(col.querySelectorAll('a'));
+            links.forEach(function (a) {
+              var item = document.createElement('a');
+              item.href = a.href || '#';
+              item.textContent = a.textContent.trim();
+              item.style.cssText = [
+                'display:block', 'padding:0.45rem 0',
+                'color:rgba(255,255,255,0.85)',
+                'font-size:0.88rem',
+                'font-family:Poppins,sans-serif',
+                'text-decoration:none',
+                'border-bottom:1px solid rgba(255,255,255,0.08)'
+              ].join(';');
+              panel.appendChild(item);
+            });
+          });
+
+          wrapper.appendChild(panel);
+
+          /* Track all panels so we can close others */
+          allPanels.push({ panel: panel, arrow: arrow, row: row, isOpen: false });
+          var thisEntry = allPanels[allPanels.length - 1];
+
+          /* Toggle accordion on row tap — close others smoothly */
+          row.addEventListener('click', function () {
+            var opening = !thisEntry.isOpen;
+
+            /* Close every other open panel */
+            allPanels.forEach(function (entry) {
+              if (entry !== thisEntry && entry.isOpen) {
+                entry.isOpen = false;
+                entry.panel.style.maxHeight = '0';
+                entry.panel.style.opacity = '0';
+                entry.panel.style.padding = '0 1.25rem';
+                entry.arrow.style.transform = 'rotate(0deg)';
+                entry.row.style.background = '';
+              }
+            });
+
+            /* Toggle this one */
+            thisEntry.isOpen = opening;
+            if (opening) {
+              panel.style.maxHeight = panel.scrollHeight + 200 + 'px';
+              panel.style.opacity = '1';
+              panel.style.padding = '0.25rem 1.25rem 1rem';
+              arrow.style.transform = 'rotate(90deg)';
+              row.style.background = 'rgba(255,255,255,0.08)';
+            } else {
+              panel.style.maxHeight = '0';
+              panel.style.opacity = '0';
+              panel.style.padding = '0 1.25rem';
+              arrow.style.transform = 'rotate(0deg)';
+              row.style.background = '';
+            }
+          });
+
+        } else {
+          /* No dropdown — direct link */
+          var href = origLink ? origLink.getAttribute('href') : '#';
+          var directLink = document.createElement('a');
+          directLink.href = href || '#';
+          directLink.style.cssText = [
+            'display:flex', 'align-items:center', 'justify-content:space-between',
+            'padding:0.9rem 1.25rem', 'color:#fff',
+            'font-size:1rem', 'font-weight:600',
+            'font-family:Poppins,sans-serif',
+            'text-decoration:none', 'width:100%'
+          ].join(';');
+          directLink.textContent = labelText;
+          wrapper.appendChild(directLink);
+        }
+
+        drawer.appendChild(wrapper);
+      });
+    }
+
+    /* ── Open / close ── */
+    function openDrawer() {
+      buildDrawer();
+      /* Position drawer to start exactly below the fixed header */
+      var hh = siteHeader ? siteHeader.offsetHeight : 70;
+      drawer.style.top = hh + 'px';
+      drawer.style.display = 'flex';
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.style.display = 'none';
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      drawer.style.display === 'flex' ? closeDrawer() : openDrawer();
+    });
+
+    /* Tap drawer background to close */
+    drawer.addEventListener('click', function (e) {
+      if (e.target === drawer) closeDrawer();
+    });
+
+    window.addEventListener('resize', function () {
+      if (!MQ.matches) closeDrawer();
+    });
+
+  })();
+  </script>
+
+  <!-- Testimonial fan: play video on hover + sound toggle -->
+  <script>
     (function () {
       const cards = document.querySelectorAll('.testi-card');
       const muteBtn = document.getElementById('testiMute');
@@ -1427,141 +1755,6 @@
         });
       });
     })();
-  </script>
-
-  <!-- Footer column reveal -->
-  <script>
-    (function () {
-      const cols = document.querySelectorAll('.sf-col-reveal');
-      if (!cols.length) return;
-      const io = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-          cols.forEach(c => c.classList.add('is-visible'));
-          io.disconnect();
-        }
-      }, { threshold: 0.1 });
-      io.observe(document.querySelector('.sticky-footer'));
-    })();
-  </script>
-
-  <script src="/js/events.js" defer></script>
-  <script src="/js/success-stories-scroll.js" defer></script>
-  <script src="/js/why-mlrit.js" defer></script>
-
-  <!-- ── Mobile hamburger menu ── -->
-  <script>
-  (function () {
-    'use strict';
-
-    var MQ = window.matchMedia('(max-width: 768px)');
-
-    // ── Build hamburger button ──────────────────────────────────────
-    function buildHamburger() {
-      var btn = document.createElement('button');
-      btn.className = 'nav-hamburger';
-      btn.setAttribute('aria-label', 'Toggle navigation');
-      btn.setAttribute('aria-expanded', 'false');
-      btn.innerHTML =
-        '<span class="nav-hamburger__bar"></span>' +
-        '<span class="nav-hamburger__bar"></span>' +
-        '<span class="nav-hamburger__bar"></span>';
-      return btn;
-    }
-
-    // ── State ───────────────────────────────────────────────────────
-    var navList   = document.getElementById('mainNavList');
-    var navInner  = document.querySelector('.main-nav__inner');
-    var hamburger = null;
-    var isSetup   = false;
-
-    // ── Setup mobile nav ────────────────────────────────────────────
-    function setupMobile() {
-      if (isSetup) return;
-      isSetup = true;
-
-      hamburger = buildHamburger();
-      navInner.appendChild(hamburger);
-
-      // Toggle drawer
-      hamburger.addEventListener('click', function () {
-        var open = navList.classList.toggle('is-open');
-        hamburger.classList.toggle('is-open', open);
-        hamburger.setAttribute('aria-expanded', String(open));
-      });
-
-      // Accordion: each nav item toggles its dropdown on click
-      var items = Array.from(document.querySelectorAll('.main-nav__item'));
-      items.forEach(function (item) {
-        var link = item.querySelector('.main-nav__link');
-        if (!link) return;
-
-        link.addEventListener('click', function (e) {
-          // Only intercept if mobile
-          if (!MQ.matches) return;
-
-          var hasDropdown = item.querySelector('.dropdown, .support-panel');
-          if (!hasDropdown) return;
-
-          e.preventDefault();
-          var wasOpen = item.classList.contains('is-open');
-
-          // Close all siblings
-          items.forEach(function (i) { i.classList.remove('is-open'); });
-
-          // Toggle clicked item
-          if (!wasOpen) item.classList.add('is-open');
-        });
-      });
-
-      // Close drawer when clicking outside
-      document.addEventListener('click', function (e) {
-        if (!MQ.matches) return;
-        if (!e.target.closest('.main-nav') && !e.target.closest('.nav-hamburger')) {
-          navList.classList.remove('is-open');
-          if (hamburger) {
-            hamburger.classList.remove('is-open');
-            hamburger.setAttribute('aria-expanded', 'false');
-          }
-        }
-      });
-    }
-
-    // ── Teardown mobile nav (restore desktop) ───────────────────────
-    function teardownMobile() {
-      if (!isSetup) return;
-      isSetup = false;
-
-      if (hamburger && hamburger.parentNode) {
-        hamburger.parentNode.removeChild(hamburger);
-        hamburger = null;
-      }
-
-      navList.classList.remove('is-open');
-      document.querySelectorAll('.main-nav__item').forEach(function (i) {
-        i.classList.remove('is-open');
-      });
-    }
-
-    // ── Respond to viewport changes ─────────────────────────────────
-    function handleMQ(e) {
-      if (e.matches) {
-        setupMobile();
-      } else {
-        teardownMobile();
-      }
-    }
-
-    // Initial check
-    if (MQ.matches) setupMobile();
-
-    // Listen for resize
-    if (MQ.addEventListener) {
-      MQ.addEventListener('change', handleMQ);
-    } else {
-      // Safari < 14 fallback
-      MQ.addListener(handleMQ);
-    }
-  })();
   </script>
 </body>
 </html>
