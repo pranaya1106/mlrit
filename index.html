@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="/css/testimonials.css" />
   <link rel="stylesheet" href="/css/why-mlrit.css" />
   <link rel="stylesheet" href="/css/events-disc.css" />
+  <!-- Mobile responsive styles — loaded last so they override desktop where needed -->
+  <link rel="stylesheet" href="/css/mobile.css" />
 </head>
 <body>
 
@@ -26,7 +28,7 @@
     <div class="masthead">
       <div class="container masthead__inner">
         <a href="/" class="masthead__logo" aria-label="MLRIT Home">
-          <img src="https://i.ibb.co/Nn73nssf/mlrit-logo.png" alt="MLRIT Logo" />
+          <img src="https://i.ibb.co/zHVr8JGd/mlrit-logo-new.png" alt="MLRIT Logo" />
         </a>
         <div class="masthead__tagline">
           <span>MLR Institute of Technology</span>
@@ -922,7 +924,7 @@
 
             <!-- Brand column -->
             <div class="sf-brand sf-col-reveal">
-              <img src="https://i.ibb.co/Nn73nssf/mlrit-logo.png" alt="MLRIT" class="sf-brand__logo" />
+              <img src="https://i.ibb.co/zHVr8JGd/mlrit-logo-new.png" alt="MLRIT" class="sf-brand__logo" />
               <p class="sf-brand__desc">MLR Institute of Technology, Dundigal, Hyderabad — shaping engineers and leaders since 2005.</p>
               <div class="sf-brand__contact">
                 <a href="tel:+919652226061">+91 96522 26061</a>
@@ -1445,5 +1447,121 @@
   <script src="/js/events.js" defer></script>
   <script src="/js/success-stories-scroll.js" defer></script>
   <script src="/js/why-mlrit.js" defer></script>
+
+  <!-- ── Mobile hamburger menu ── -->
+  <script>
+  (function () {
+    'use strict';
+
+    var MQ = window.matchMedia('(max-width: 768px)');
+
+    // ── Build hamburger button ──────────────────────────────────────
+    function buildHamburger() {
+      var btn = document.createElement('button');
+      btn.className = 'nav-hamburger';
+      btn.setAttribute('aria-label', 'Toggle navigation');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.innerHTML =
+        '<span class="nav-hamburger__bar"></span>' +
+        '<span class="nav-hamburger__bar"></span>' +
+        '<span class="nav-hamburger__bar"></span>';
+      return btn;
+    }
+
+    // ── State ───────────────────────────────────────────────────────
+    var navList   = document.getElementById('mainNavList');
+    var navInner  = document.querySelector('.main-nav__inner');
+    var hamburger = null;
+    var isSetup   = false;
+
+    // ── Setup mobile nav ────────────────────────────────────────────
+    function setupMobile() {
+      if (isSetup) return;
+      isSetup = true;
+
+      hamburger = buildHamburger();
+      navInner.appendChild(hamburger);
+
+      // Toggle drawer
+      hamburger.addEventListener('click', function () {
+        var open = navList.classList.toggle('is-open');
+        hamburger.classList.toggle('is-open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+      });
+
+      // Accordion: each nav item toggles its dropdown on click
+      var items = Array.from(document.querySelectorAll('.main-nav__item'));
+      items.forEach(function (item) {
+        var link = item.querySelector('.main-nav__link');
+        if (!link) return;
+
+        link.addEventListener('click', function (e) {
+          // Only intercept if mobile
+          if (!MQ.matches) return;
+
+          var hasDropdown = item.querySelector('.dropdown, .support-panel');
+          if (!hasDropdown) return;
+
+          e.preventDefault();
+          var wasOpen = item.classList.contains('is-open');
+
+          // Close all siblings
+          items.forEach(function (i) { i.classList.remove('is-open'); });
+
+          // Toggle clicked item
+          if (!wasOpen) item.classList.add('is-open');
+        });
+      });
+
+      // Close drawer when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!MQ.matches) return;
+        if (!e.target.closest('.main-nav') && !e.target.closest('.nav-hamburger')) {
+          navList.classList.remove('is-open');
+          if (hamburger) {
+            hamburger.classList.remove('is-open');
+            hamburger.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+    }
+
+    // ── Teardown mobile nav (restore desktop) ───────────────────────
+    function teardownMobile() {
+      if (!isSetup) return;
+      isSetup = false;
+
+      if (hamburger && hamburger.parentNode) {
+        hamburger.parentNode.removeChild(hamburger);
+        hamburger = null;
+      }
+
+      navList.classList.remove('is-open');
+      document.querySelectorAll('.main-nav__item').forEach(function (i) {
+        i.classList.remove('is-open');
+      });
+    }
+
+    // ── Respond to viewport changes ─────────────────────────────────
+    function handleMQ(e) {
+      if (e.matches) {
+        setupMobile();
+      } else {
+        teardownMobile();
+      }
+    }
+
+    // Initial check
+    if (MQ.matches) setupMobile();
+
+    // Listen for resize
+    if (MQ.addEventListener) {
+      MQ.addEventListener('change', handleMQ);
+    } else {
+      // Safari < 14 fallback
+      MQ.addListener(handleMQ);
+    }
+  })();
+  </script>
 </body>
 </html>
