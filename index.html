@@ -18,6 +18,12 @@
   <link rel="stylesheet" href="/css/events-disc.css" />
   <!-- Mobile responsive styles — loaded last so they override desktop where needed -->
   <link rel="stylesheet" href="/css/mobile.css" />
+  <link rel="stylesheet" href="/css/chronicles-section.css" />
+  <!-- Search module CSS -->
+  <link rel="stylesheet" href="/css/search-integration.css" />
+  <link rel="stylesheet" href="/modules/search/styles/search.css" />
+  <!-- Font Awesome for search icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
@@ -25,7 +31,7 @@
        1. NAVBAR
        ===================== -->
   <header class="site-header">
-    <div class="masthead">
+    <div class="masthead top-header">
       <div class="container masthead__inner">
         <a href="/" class="masthead__logo" aria-label="MLRIT Home">
           <img src="https://i.ibb.co/zHVr8JGd/mlrit-logo-new.png" alt="MLRIT Logo" />
@@ -33,32 +39,11 @@
         <div class="masthead__tagline">
           <span>MLR Institute of Technology</span>
         </div>
-        <div class="masthead__right">
-          <a href="#" class="eapcet-badge" aria-label="EAPCET Code MLID">
+        <div class="header-right">
+          <a href="#" class="masthead__eapcet" aria-label="EAPCET Code MLID">
             EAPCET CODE&nbsp;:&nbsp;MLID
           </a>
-          <button class="masthead__search-btn" id="searchToggle" aria-label="Search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Search overlay -->
-        <div class="masthead__search-overlay" id="searchOverlay">
-          <div class="masthead__search-box">
-            <svg class="masthead__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-            <input type="text" class="masthead__search-input" id="searchInput" placeholder="Search MLRIT..." autocomplete="off" />
-            <button class="masthead__search-close" id="searchClose" aria-label="Close search">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-              </svg>
-            </button>
-          </div>
+          <!-- Search icon injected here automatically by SearchSystem.init() -->
         </div>
       </div>
     </div>
@@ -883,6 +868,27 @@
         </button>
       </div>
 
+    </section>
+
+    <!-- =====================
+         9. MLRIT CHRONICLES
+         ===================== -->
+    <section class="chronicles-section" id="chronicles">
+      <div class="section-wrap">
+        <div class="chronicles-header">
+          <span class="section-label reveal">Latest Updates</span>
+          <h2 class="section-heading reveal" data-delay="1">MLRIT Chronicles</h2>
+          <p class="section-sub reveal" data-delay="2">Stay updated with the latest news, achievements, and events from MLRIT</p>
+        </div>
+
+        <div class="chronicles-grid" id="chroniclesHomeGrid">
+          <!-- Chronicles will be loaded here by JavaScript -->
+        </div>
+
+        <div class="chronicles-view-all">
+          <a href="pages/chronicles.html" class="btn-view-all">View All Chronicles <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
     </section>
 
     <!-- =====================
@@ -1755,6 +1761,52 @@
         });
       });
     })();
+  </script>
+
+  <!-- Search module scripts -->
+  <script src="/modules/search/data/searchData.js?v=2"></script>
+  <script src="/modules/search/data/chroniclesData.js?v=2"></script>
+  <script src="/modules/search/utils/searchEngine.js?v=2"></script>
+  <script src="/modules/search/components/SearchOverlay.js?v=2"></script>
+  <script src="/modules/search/components/SearchInput.js?v=2"></script>
+  <script src="/modules/search/components/FAQList.js?v=2"></script>
+  <script src="/modules/search/components/SearchResultsPreview.js?v=2"></script>
+  <script src="/modules/search/index.js?v=2"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+      if (window.SearchSystem) {
+          window.SearchSystem.init({
+              basePath:   '/',
+              apiBase:    '',
+              debounceMs: 300,
+              faqItems:   []
+          });
+      }
+
+      // Load chronicles on homepage
+      if (window.ChroniclesData) {
+          var grid = document.getElementById('chroniclesHomeGrid');
+          if (!grid) return;
+
+          // Sort by date newest first, take top 6
+          var items = window.ChroniclesData.data.slice().sort(function(a, b) {
+              return new Date(b.date) - new Date(a.date);
+          }).slice(0, 6);
+
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+          grid.innerHTML = items.map(function(item) {
+              var d = new Date(item.date);
+              var dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+              return '<a class="chronicle-card-home" href="/pages/chronicles.html">' +
+                  '<span class="chronicle-category-badge">' + item.category + '</span>' +
+                  '<div class="chronicle-date-home"><i class="far fa-calendar-alt"></i> ' + dateStr + '</div>' +
+                  '<h3 class="chronicle-title-home">' + item.title + '</h3>' +
+                  '<p class="chronicle-description-home">' + item.description + '</p>' +
+                  '</a>';
+          }).join('');
+      }
+  });
   </script>
 </body>
 </html>
